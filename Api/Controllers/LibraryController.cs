@@ -14,8 +14,15 @@ public class LibraryController(ILibraryService service) : ControllerBase
     [HttpPost]
     public ActionResult<LoanResponse> Loan([FromBody] LoanBookDto loan)
     {
-        var result = service.Loan(loan);
-        return Ok(result);
+        try
+        {
+            var result = service.Loan(loan);
+            return Ok(result);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
     }
 
     [Route("[action]")]
